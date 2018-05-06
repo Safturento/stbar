@@ -1,0 +1,36 @@
+#stbar{
+	min-width:100%;
+	margin:15px;
+	background:rgb(0,0,0,0);
+}
+
+#bar_right, #bar_left, #bar_center { 
+	min-height:30px;
+	margin:15px;
+	margin-bottom:0;
+	background:rgb(0,0,0,10%);
+}
+
+/*
+#bar_right	{ background:#F00; }
+#bar_left	{ background:#0F0; }
+#bar_center	{ background:#00F; }
+*/
+
+* {
+	font: 11px envypn;
+}
+
+QPushButton {
+	background: rgb(rgb-xrdb-color0, 80%);
+	color: xrdb-color7;
+	min-width: 20px;
+	padding:10px;
+	border-radius:0;
+	border-bottom:1px solid xrdb-color7;
+}
+
+QPushButton:hover {
+	background: rgb(rgb-xrdb-color7, 80%);
+	color: xrdb-color0;
+}
