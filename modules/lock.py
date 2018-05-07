@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QPushButton
+from .module import Module
 
 DEFAULT_CONFIG = {
 	'Lock': {
@@ -6,17 +6,11 @@ DEFAULT_CONFIG = {
 	}
 }
 
-class Lock(QPushButton):
+class Lock(Module):
 	def __init__(self, stbar, parent_bar):
-		QPushButton.__init__(self, parent_bar)
+		Module.__init__(self, 'Lock', stbar, parent_bar, DEFAULT_CONFIG)
 
 		self.setText('')
-
-		self.name = 'Lock'
-		self.stbar = stbar
-		self.config = stbar.deep_update(DEFAULT_CONFIG, stbar.config)
-		self.clicked.connect(self.on_click)
-		self.show()
 
 	def on_click(self):
 		self.stbar.exec(self.config[self.name]['exec'])

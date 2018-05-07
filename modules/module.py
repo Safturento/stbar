@@ -6,6 +6,8 @@ class Module(QPushButton, QThread):
 		QPushButton.__init__(self, parent_bar)
 		QThread.__init__(self)
 
+		self.stbar = stbar
+		self.parent_bar = parent_bar
 		self.name = name
 		self.config = stbar.deep_update(default_config, stbar.config)
 		self.show()

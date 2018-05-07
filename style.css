@@ -4,33 +4,35 @@
 	background:rgb(0,0,0,0);
 }
 
-#bar_right, #bar_left, #bar_center { 
-	min-height:30px;
-	margin:15px;
-	margin-bottom:0;
-	background:rgb(0,0,0,10%);
+#bar_right {
+	margin-right:15px;
 }
 
-/*
-#bar_right	{ background:#F00; }
-#bar_left	{ background:#0F0; }
-#bar_center	{ background:#00F; }
-*/
+#bar_left {
+	margin-left:15px;
+}
+
+#bar_right, #bar_left, #bar_center { 
+	min-height:34px;
+	margin-bottom:0;
+	background:rgb(0,0,0,0%);
+}
 
 * {
 	font: 11px envypn;
 }
 
 QPushButton {
-	background: rgb(rgb-xrdb-color0, 80%);
-	color: xrdb-color7;
+	background: rgb(rgb-xrdb-color0, 75%);
+	color: xrdb-color5;
 	min-width: 20px;
-	padding:10px;
+	padding:7px;
+	min-height:20px;
 	border-radius:0;
-	border-bottom:1px solid xrdb-color7;
+	border-bottom:1px solid xrdb-color5;
 }
 
 QPushButton:hover {
-	background: rgb(rgb-xrdb-color7, 80%);
+	background: rgb(rgb-xrdb-color5, 80%);
 	color: xrdb-color0;
 }
