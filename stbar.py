@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
+import os
 import sys
 import signal
 import importlib
 
-from subprocess import call
+from subprocess import call, Popen, PIPE
 from pathlib import PosixPath
 from json import load, JSONDecodeError
 from xrdb import parse_colors
-
 
 from PySide2.QtGui import *
 from PySide2.QtCore import *
@@ -18,16 +18,38 @@ from PySide2.QtWidgets import *
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 CONFIG_PATH = PosixPath('~/.config/stbar').expanduser()
+FILE_PATH = os.path.dirname(__file__)
 
 DEFAULT_CONFIG = {
-	"modules":{
-		"left": [],
-		"center": ["Clock"],
-		"right": ["Lock"]
+	'modules':{
+		'left': ['I3', 'Test', 'FailTest'],
+		'center': ['Clock'],
+		'right': ['Sound', 'Battery', 'Wifi', 'Lock']
 	}
 }
 
+TEXT_COLOR = {
+    'HEADER':	 '\033[95m',
+    'OKBLUE':	 '\033[94m',
+    'OKGREEN':	 '\033[92m',
+    'WARNING':	 '\033[93m',
+    'FAIL':		 '\033[91m',
+    'ENDC':		 '\033[0m',
+    'BOLD':		 '\033[1m',
+    'UNDERLINE': '\033[4m',
+	
+}
+
+def color(text, flag):
+	return TEXT_COLOR[flag] + text + TEXT_COLOR['ENDC']
+
 class stbar(QWidget):
+	'''
+	Modules can connect functions to this signal in ordder
+	to add new QObjects on the proper thread
+	'''
+	update = Signal()
+
 	def __init__(self, app):
 		QWidget.__init__(self)
 		self.app = app
@@ -52,7 +74,10 @@ class stbar(QWidget):
 		bar_names = ['left','center','right']
 
 		for bar_name, alignment in zip(bar_names, alignments):
-			bar = QLabel("", self)
+			'''QWidget acts really weird in this scenario, but
+			QLabel conforms to css and splitting
+			evenly in the QHBoxlayout'''
+			bar = QLabel('', self)
 			bar.setObjectName('bar_' + bar_name)
 			
 			bar.layout = QHBoxLayout()
@@ -66,7 +91,7 @@ class stbar(QWidget):
 			self.layout.addWidget(bar)
 			self.bar[bar_name] = bar
 
-		stylesheet = ''.join([line for line in open('style.css', 'r')])
+		stylesheet = ''.join([line for line in open(FILE_PATH + '/style.css', 'r')])
 
 		try:
 			stylesheet += ''.join([line for line in open(CONFIG_PATH.joinpath('style.css'), 'r')])
@@ -84,17 +109,11 @@ class stbar(QWidget):
 		self.show()
 		self.app.exec_()
 
-	def exec(self, script):
-		'''
-		little helper script to pass execution from buttons
-		'''
-		return call(str(PosixPath(script).expanduser()).split())
-
 	def deep_update(self, original, update):
-	    """
+	    '''
 	    Recursively update a dict.
 	    Subdict's won't be overwritten but also updated.
-	    """
+	    '''
 	    for key, value in original.items(): 
 	        if key not in update:
 	            update[key] = value
@@ -118,15 +137,39 @@ class stbar(QWidget):
 		# If the user config didn't exist, just return defaults
 		return DEFAULT_CONFIG
 
+	def load_module(self, module_import, bar_name):
+		module = module_import.init(self, self.bar[bar_name])
+		self.bar[bar_name].layout.addWidget(module)
+		print(color('Loaded ' + module.name, 'OKGREEN'))
+
 	def load_modules(self):
+		self.loaded_modules = []
+
 		for bar_name in self.bar:
 			for module_name in self.config['modules'][bar_name]:
-				module_import = importlib.import_module('modules.' + module_name.lower())
-				module = module_import.init(self, self.bar[bar_name])
-				self.bar[bar_name].layout.addWidget(module)
-				print('Loaded', module.name)
+				# Attempt to import as user modules. We check user first
+				# so that users can override core modules if they wish
+				try:
+					# attempt to load from user config modules
+					module_path = CONFIG_PATH.joinpath('modules', module_name.lower()+'.py')
+					spec = importlib.util.spec_from_file_location(module_name, module_path)
+					module_import = importlib.util.module_from_spec(spec)
+					spec.loader.exec_module(module_import)
+
+					self.load_module(module_import, bar_name)
+					
+				except:
+					# if loading from user failed try to load as core module
+					try:
+						module_import = importlib.import_module('modules.' + module_name.lower())
+					
+						self.load_module(module_import, bar_name)
+					
+					except ModuleNotFoundError:
+						print(color('Module {} doesn\'t exist.'.format(module_name), 'FAIL'))
 
 if __name__ == '__main__':
 	app = QApplication([])
 	app.setApplicationDisplayName('stbar')
+	print('stbar started')
 	stbar(app).start()

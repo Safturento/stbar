@@ -13,6 +13,6 @@ class Lock(Module):
 		self.setText('')
 
 	def on_click(self):
-		self.stbar.exec(self.config[self.name]['exec'])
+		self.exec(self.config[self.name]['exec'])
 
 def init(stbar, parent_bar): return Lock(stbar, parent_bar)

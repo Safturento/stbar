@@ -1,38 +1,54 @@
-#stbar{
-	min-width:100%;
-	margin:15px;
-	background:rgb(0,0,0,0);
-}
-
-#bar_right {
-	margin-right:15px;
-}
-
-#bar_left {
-	margin-left:15px;
-}
-
 #bar_right, #bar_left, #bar_center { 
+	/* Should add to QPushButton's
+	min-height + padding-top + padding-bottom */
 	min-height:34px;
-	margin-bottom:0;
+	
+	margin-top: 15px;
 	background:rgb(0,0,0,0%);
 }
+#bar_right  { margin-right: 15px; }
+#bar_left   { margin-left: 15px; }
 
-* {
-	font: 11px envypn;
-}
+/* debugging bar position */
+ /*
+#bar_right  { background: #f00; }
+#bar_left   { background: #0f0; }
+#bar_center { background: #00f; }
+*/
+
+* { font: 11px envypn; }
 
 QPushButton {
 	background: rgb(rgb-xrdb-color0, 75%);
 	color: xrdb-color5;
 	min-width: 20px;
-	padding:7px;
+	padding: 7px 10px 7px;
 	min-height:20px;
 	border-radius:0;
-	border-bottom:1px solid xrdb-color5;
+	border-top:0px solid xrdb-color5;
+	border-bottom:0px solid xrdb-color5;
 }
 
+/* individual button margins */
+/*
+#bar_right QPushButton { margin-left: 15px; }
+#bar_left QPushButton { margin-right: 15px; }
+#bar_center QPushButton { margin: 0 7px; }
+#I3 QPushButton { margin:0; }
+*/
+
 QPushButton:hover {
-	background: rgb(rgb-xrdb-color5, 80%);
-	color: xrdb-color0;
+	background: rgb(rgb-xrdb-color3, 40%);
+	border-color:xrdb-color0;
+	color: xrdb-color1;
+}
+
+QPushButton:pressed { 
+	padding-bottom: 5px;
+	border-bottom: 2px solid xrdb-color1;
+ }
+
+QPushButton[i3visible=true] {
+	background: rgb(rgb-xrdb-color3, 40%);
+	color: xrdb-color1;
 }

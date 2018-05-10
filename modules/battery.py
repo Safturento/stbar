@@ -47,7 +47,7 @@ class Battery(Module):
 
 			script = 'cat {}{}'.format(PATH_TO_BATTERY, 'uevent')
 
-			output, error = self.stbar.exec(script)
+			output, error = self.exec(script)
 			if error:
 				print(error)
 			else:
@@ -78,6 +78,6 @@ class Battery(Module):
 			self.sleep(self.config[self.name]['interval'])
 
 	def on_click(self):
-		self.stbar.exec(self.config[self.name]['exec'])
+		self.exec(self.config[self.name]['exec'])
 
 def init(stbar, parent_bar): return Battery(stbar, parent_bar)

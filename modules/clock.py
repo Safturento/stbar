@@ -3,7 +3,7 @@ from time import strftime
 
 DEFAULT_CONFIG = {
 	'Clock': {
-		'format': '%H:%M:%S',
+		'format': '%H:%M',
 		'interval': 1
 	}
 }
@@ -11,8 +11,6 @@ DEFAULT_CONFIG = {
 class Clock(Module):
 	def __init__(self, stbar, parent_bar):
 		Module.__init__(self, 'Clock', stbar, parent_bar, DEFAULT_CONFIG)
-		
-		self.setText(strftime(self.config[self.name]['format']))
 
 	def run(self):
 		while True:
