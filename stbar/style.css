@@ -18,7 +18,7 @@
 
 * { font: 11px envypn; }
 
-QPushButton, QMenu::item, QMessageBox {
+QPushButton, QMenu::item {
 	background: rgb(rgb-xrdb-color0, 75%);
 	color: xrdb-color5;
 	min-width: 20px;

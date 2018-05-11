@@ -1,7 +1,6 @@
 from PySide2.QtWidgets import QWidget, QPushButton, QHBoxLayout
-from PySide2.QtCore import QThread, Signal, Slot
+from PySide2.QtCore import QThread, Signal
 
-# import socket, os
 import i3ipc
 
 DEFAULT_CONFIG = {
@@ -19,10 +18,12 @@ DEFAULT_CONFIG = {
 
 
 class I3(QWidget, QThread):
+	update_signal = Signal(QWidget)
 
 	class Workspace(QPushButton):
 		def __init__(self, i3, ws_info):
 			QPushButton.__init__(self, i3)
+			
 			self.num = ws_info['num']
 
 			# bind workspace swap
@@ -64,9 +65,6 @@ class I3(QWidget, QThread):
 		self.layout.setMargin(0)
 		self.layout.setSpacing(0)
 		self.buttons = {}
-
-		# Bind update to main thread
-		self.stbar.update.connect(self.update_workspaces)
 		
 		self.show()
 		self.setLayout(self.layout)
@@ -83,8 +81,7 @@ class I3(QWidget, QThread):
 	def switch_to_workspace(self, workspace):
 		self.ipc.command('workspace {}'.format(workspace.num))
 
-	@Slot(str)
-	def update_workspaces(self):
+	def update(self):
 		visible = []
 		workspaces = self.ipc.get_workspaces()
 		# Make sure all active workspaces have a button created
@@ -101,6 +98,6 @@ class I3(QWidget, QThread):
 				button.setVisible(False)
 
 	def on_workspace_focus(self, i3ipc, event):
-		self.stbar.update.emit()
+		self.update_signal.emit(self)
 
 def init(stbar, parent_bar): return I3(stbar, parent_bar)

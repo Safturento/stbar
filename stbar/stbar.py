@@ -44,12 +44,7 @@ def color(text, flag):
 	return TEXT_COLOR[flag] + text + TEXT_COLOR['ENDC']
 
 class stbar(QWidget):
-	'''
-	Modules can connect functions to this signal in ordder
-	to add new QObjects on the proper thread
-	'''
-	update = Signal()
-
+	
 	def __init__(self, app):
 		QWidget.__init__(self)
 		self.app = app
@@ -99,6 +94,7 @@ class stbar(QWidget):
 		
 		stylesheet = parse_colors(stylesheet)
 		self.setStyleSheet(stylesheet)
+		self.stylesheet = stylesheet
 		
 		self.setWindowTitle('stbar')
 		self.load_modules()
@@ -129,7 +125,7 @@ class stbar(QWidget):
 			return self.deep_update(DEFAULT_CONFIG, load(open(CONFIG_PATH.joinpath('config'), 'r')))
 		except JSONDecodeError:
 			print('Invalid config file, continue with defaults? [y/n]')
-			if input().lower() is not 'y':
+			if input().lower() != 'y':
 				sys.exit()
 		except IOError:
 			print('No config found, loading with defaults')
@@ -137,14 +133,18 @@ class stbar(QWidget):
 		# If the user config didn't exist, just return defaults
 		return DEFAULT_CONFIG
 
+	@Slot()
+	def update_module(self, module, *args, **kwargs):
+		module.update(*args, **kwargs)
+
 	def load_module(self, module_import, bar_name):
 		module = module_import.init(self, self.bar[bar_name])
+
 		self.bar[bar_name].layout.addWidget(module)
+		module.update_signal.connect(self.update_module)
 		print(color('Loaded', 'OKGREEN'))
 
 	def load_modules(self):
-		self.loaded_modules = []
-
 		for bar_name in self.bar:
 			for module_name in self.config['modules'][bar_name]:
 				print('Loading {}: '.format(module_name), end='')
@@ -156,13 +156,12 @@ class stbar(QWidget):
 					spec = importlib.util.spec_from_file_location(module_name, module_path)
 					module_import = importlib.util.module_from_spec(spec)
 					spec.loader.exec_module(module_import)
-
 					self.load_module(module_import, bar_name)
 
 				except:
 					# if loading from user failed try to load as core module
 					try:
-						module_import = importlib.import_module('modules.' + module_name.lower())
+						module_import = importlib.import_module('stbar.modules.' + module_name.lower())
 					
 						self.load_module(module_import, bar_name)
 					

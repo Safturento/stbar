@@ -1,11 +1,13 @@
-from PySide2.QtWidgets import QPushButton, QMenu, QAction
-from PySide2.QtCore import QThread, QPoint, Qt
+from PySide2.QtWidgets import QWidget, QPushButton, QMenu, QAction
+from PySide2.QtCore import QThread, QPoint, Qt, Signal
 
 from subprocess import call, Popen, PIPE
 from pathlib import PosixPath
 import re
 
 class Module(QPushButton, QThread):
+	update_signal = Signal(QWidget)
+
 	def __init__(self, name, stbar, parent_bar, default_config={}):
 		QPushButton.__init__(self, parent_bar)
 		QThread.__init__(self)
