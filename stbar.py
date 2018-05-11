@@ -22,8 +22,8 @@ FILE_PATH = os.path.dirname(__file__)
 
 DEFAULT_CONFIG = {
 	'modules':{
-		'left': ['I3', 'Test', 'FailTest'],
-		'center': ['Clock'],
+		'left': ['I3'],
+		'center': ['Clock', 'Lock'],
 		'right': ['Sound', 'Battery', 'Wifi', 'Lock']
 	}
 }
@@ -140,13 +140,14 @@ class stbar(QWidget):
 	def load_module(self, module_import, bar_name):
 		module = module_import.init(self, self.bar[bar_name])
 		self.bar[bar_name].layout.addWidget(module)
-		print(color('Loaded ' + module.name, 'OKGREEN'))
+		print(color('Loaded', 'OKGREEN'))
 
 	def load_modules(self):
 		self.loaded_modules = []
 
 		for bar_name in self.bar:
 			for module_name in self.config['modules'][bar_name]:
+				print('Loading {}: '.format(module_name), end='')
 				# Attempt to import as user modules. We check user first
 				# so that users can override core modules if they wish
 				try:
@@ -157,7 +158,7 @@ class stbar(QWidget):
 					spec.loader.exec_module(module_import)
 
 					self.load_module(module_import, bar_name)
-					
+
 				except:
 					# if loading from user failed try to load as core module
 					try:
@@ -166,7 +167,7 @@ class stbar(QWidget):
 						self.load_module(module_import, bar_name)
 					
 					except ModuleNotFoundError:
-						print(color('Module {} doesn\'t exist.'.format(module_name), 'FAIL'))
+						print(color('Module doesn\'t exist.', 'FAIL'))
 
 if __name__ == '__main__':
 	app = QApplication([])

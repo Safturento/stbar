@@ -18,7 +18,7 @@
 
 * { font: 11px envypn; }
 
-QPushButton {
+QPushButton, QMenu::item, QMessageBox {
 	background: rgb(rgb-xrdb-color0, 75%);
 	color: xrdb-color5;
 	min-width: 20px;
@@ -29,6 +29,11 @@ QPushButton {
 	border-bottom:0px solid xrdb-color5;
 }
 
+QMenu::item {
+	min-height:10px;
+	padding:7px;
+}
+
 /* individual button margins */
 /*
 #bar_right QPushButton { margin-left: 15px; }
@@ -37,10 +42,15 @@ QPushButton {
 #I3 QPushButton { margin:0; }
 */
 
-QPushButton:hover {
+QPushButton:hover, QMenu::item:selected {
 	background: rgb(rgb-xrdb-color3, 40%);
 	border-color:xrdb-color0;
 	color: xrdb-color1;
+}
+
+QMenu::item:pressed {
+	padding-left:5px;
+	border-left: 2px solid xrdb-color1;
 }
 
 QPushButton:pressed { 

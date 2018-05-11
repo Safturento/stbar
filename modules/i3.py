@@ -75,6 +75,8 @@ class I3(QWidget, QThread):
 	def run(self):
 		self.ipc = i3ipc.Connection()
 		self.ipc.on('workspace::focus', self.on_workspace_focus)
+		# Spoof ipc event to update initially
+		self.on_workspace_focus(self.ipc, 'focus')
 		self.ipc.main()
 
 
