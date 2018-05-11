@@ -168,9 +168,3 @@ class stbar(QWidget):
 					
 					except ModuleNotFoundError:
 						print(color('Module doesn\'t exist.', 'FAIL'))
-
-# if __name__ == '__main__':
-# 	app = QApplication([])
-# 	app.setApplicationDisplayName('stbar')
-# 	print('stbar started')
-# 	stbar(app).start()

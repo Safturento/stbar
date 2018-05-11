@@ -1,15 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
+from setuptools import setup, find_packages
 
-import setuptools
-
-setuptools.setup(
-	name='stbar',
-	version='1.0',
-	description='Taskbar for linux tiling window managers',
-	# author='Jean-Michel Mailloux-Huberdeau',
-	url='https://github.com/Safturento/stbar',
-	packages=['stbar', 'stbar.modules'],
-	package_data={'stbar':['style.css']},
-	include_package_data=True,
-	install_requires=['i3ipc', 'PySide2']
+setup(
+	name = 'stbar',
+	version = '0.1.0',
+	description = 'Taskbar for linux tiling window managers',
+	# author = 'Jean-Michel Mailloux-Huberdeau',
+	url = 'https://github.com/Safturento/stbar',
+	packages = find_packages(),
+	package_data = {'stbar': ['style.css']},
+	include_package_data = True,
+	install_requires = ['i3ipc', 'PySide2'],
+	entry_points = {'console_scripts': ['stbar=stbar.__main__:main']}
 )
