@@ -8,7 +8,7 @@ import importlib
 from subprocess import call, Popen, PIPE
 from pathlib import PosixPath
 from json import load, JSONDecodeError
-from xrdb import parse_colors
+from .xrdb import parse_colors
 
 from PySide2.QtGui import *
 from PySide2.QtCore import *
@@ -169,8 +169,8 @@ class stbar(QWidget):
 					except ModuleNotFoundError:
 						print(color('Module doesn\'t exist.', 'FAIL'))
 
-if __name__ == '__main__':
-	app = QApplication([])
-	app.setApplicationDisplayName('stbar')
-	print('stbar started')
-	stbar(app).start()
+# if __name__ == '__main__':
+# 	app = QApplication([])
+# 	app.setApplicationDisplayName('stbar')
+# 	print('stbar started')
+# 	stbar(app).start()

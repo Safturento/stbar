@@ -35,8 +35,8 @@ class Module(QPushButton, QThread):
 		return action
 
 	def on_context_menu(self, point):		
-		self.setAttribute(Qt.WA_Hover, False)
-		pos = self.get_menu_point('BOTTOMRIGHT', 'TOPRIGHT')
+		# self.setAttribute(Qt.WA_Hover, False)
+		pos = self.get_menu_point('BOTTOMRIGHT', 'TOPRIGHT', 0, -5)
 		self.menu.exec_(pos)
 
 	def get_menu_point(self, button_position, menu_position, xOffset = 0, yOffset = 0):
