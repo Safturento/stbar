@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name = 'stbar',
-	version = '0.2.0',
+	version = '0.2.1',
 	description = 'Taskbar for linux tiling window managers',
 	# author = 'Jean-Michel Mailloux-Huberdeau',
 	url = 'https://github.com/Safturento/stbar',

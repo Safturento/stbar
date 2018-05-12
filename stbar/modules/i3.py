@@ -16,7 +16,6 @@ DEFAULT_CONFIG = {
 	}
 }
 
-
 class I3(QWidget, QThread):
 	update_signal = Signal(QWidget)
 
@@ -76,7 +75,6 @@ class I3(QWidget, QThread):
 		# Spoof ipc event to update initially
 		self.on_workspace_focus(self.ipc, 'focus')
 		self.ipc.main()
-
 
 	def switch_to_workspace(self, workspace):
 		self.ipc.command('workspace {}'.format(workspace.num))

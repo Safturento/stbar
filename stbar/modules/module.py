@@ -25,28 +25,75 @@ class Module(QPushButton, QThread):
 			self.start()
 
 	def init_menu(self):
+		'''
+		Basic initialization for a dropdown menu on right click.
+		This should be called before add_menu_action is called
+		'''
 		self.setContextMenuPolicy(Qt.CustomContextMenu)
 		self.menu = QMenu(self.stbar)
 		self.customContextMenuRequested.connect(self.on_context_menu)
 
-	def add_menu_action(self, name, function):
-		action = QAction(name, self)
+	def add_menu_action(self, button_text, function):
+		'''
+		Helper function to add a menu item connected to a module function
+
+
+		Parameters
+		----------
+		button_text : str
+			The text to display for the menu item
+		function : func
+			The function to map the button click to
+
+		Returns
+		-------
+		QAction
+			returns the action object if needed for more customization
+		'''
+
+		action = QAction(button_text, self)
 		action.triggered.connect(function)
 		self.menu.addAction(action)
 
 		return action
 
-	def on_context_menu(self, point):		
-		# self.setAttribute(Qt.WA_Hover, False)
-		pos = self.get_menu_point('BOTTOMRIGHT', 'TOPRIGHT', 0, -5)
+	def on_context_menu(self, point):
+		'''
+		Positions and opens the menu
+
+		Parameters
+		----------
+			point : QPoint
+				The local mouse click coordinates
+		'''
+		pos = self.get_menu_point('BOTTOMRIGHT', 'TOPRIGHT')
 		self.menu.exec_(pos)
 
 	def get_menu_point(self, button_position, menu_position, xOffset = 0, yOffset = 0):
 		''' 
-			Calculates offsets for positioning menu relative to button. For example, if you want
-			the menu to have it's top right anchored to the bottom right of the button you would call
+		Calculates offsets for positioning menu relative to button. For example, if you want
+		the menu to have it's top right anchored to the bottom right of the button you would call
 
-			self.get_point(point, 'TOPRIGHT', 'BOTTOMRIGHT')
+		self.get_point(point, 'TOPRIGHT', 'BOTTOMRIGHT')
+
+		Parameters
+		----------
+	
+		button_position : str
+			Dictates what corner of the button the menu should be anchored to
+			Any combination of TOP/BOTTOM RIGHT/LEFT 
+		menu_position : str
+			Dictates what corner of the menu to anchor to the above button corner
+			Any combination of TOP/BOTTOM RIGHT/LEFT
+		xOffset : int (optional)
+			Any additional x-offset from the anchor point
+		yOffset : int (optional)
+			Any additional y-offset from the anchor point
+		
+		Returns
+		-------
+		QPoint
+			The global point to place the topleft corner of the menu after calculated offsets	
 		'''
 
 		button_position = button_position.upper()
@@ -82,7 +129,6 @@ class Module(QPushButton, QThread):
 		if menu_position_y == 'BOTTOM':
 			yOffset -= self.menu.height()
 
-
 		global_pos.setX(global_pos.x() + xOffset)
 		global_pos.setY(global_pos.y() + yOffset)
 
@@ -93,7 +139,8 @@ class Module(QPushButton, QThread):
 		little helper script to pass execution from buttons
 		'''
 
-		parts = script.split('|')
+		# split pipeline
+		parts = script.split('|') 
 		p = []
 		for i, part in enumerate(parts):
 			args = str(PosixPath(script).expanduser()).split()
@@ -101,6 +148,7 @@ class Module(QPushButton, QThread):
 				p.append(Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE))
 			else:
 				p.append(Popen(args, stdin=p[i-1].stdout, stdout=PIPE, stderr=PIPE))
+		
 		output, error = p[-1].communicate()
 
 		return output.decode('utf-8'), False if error is '' else error

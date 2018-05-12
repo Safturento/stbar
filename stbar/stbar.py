@@ -23,7 +23,7 @@ FILE_PATH = os.path.dirname(__file__)
 DEFAULT_CONFIG = {
 	'modules':{
 		'left': ['I3'],
-		'center': ['Clock', 'Lock'],
+		'center': ['Clock'],
 		'right': ['Sound', 'Battery', 'Wifi', 'Lock']
 	}
 }
@@ -109,6 +109,13 @@ class stbar(QWidget):
 	    '''
 	    Recursively update a dict.
 	    Subdict's won't be overwritten but also updated.
+
+	    Parameters
+	    ----------
+	    original : dict
+	    	The dictionary to be updated
+	    update : dict
+	    	The dictionary to override original with
 	    '''
 	    for key, value in original.items(): 
 	        if key not in update:
