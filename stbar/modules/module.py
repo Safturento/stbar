@@ -123,11 +123,14 @@ class Module(QPushButton, QThread):
 		if button_position_y == 'BOTTOM':
 			yOffset += self.height()
 
+
+		size = self.menu.sizeHint()
+
 		if menu_position_x == 'RIGHT':
-			xOffset -= self.menu.width()
+			xOffset -= size.width()
 
 		if menu_position_y == 'BOTTOM':
-			yOffset -= self.menu.height()
+			yOffset -= size.height()
 
 		global_pos.setX(global_pos.x() + xOffset)
 		global_pos.setY(global_pos.y() + yOffset)
@@ -148,7 +151,7 @@ class Module(QPushButton, QThread):
 				p.append(Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE))
 			else:
 				p.append(Popen(args, stdin=p[i-1].stdout, stdout=PIPE, stderr=PIPE))
-		
+
 		output, error = p[-1].communicate()
 
 		return output.decode('utf-8'), False if error is '' else error
