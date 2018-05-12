@@ -99,8 +99,6 @@ class stbar(QWidget):
 		self.setWindowTitle('stbar')
 		self.load_modules()
 
-	def move(self): pass
-
 	def start(self):
 		self.show()
 		self.app.exec_()
