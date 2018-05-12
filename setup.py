@@ -19,8 +19,9 @@ class PostInstall(install):
 			os.mkdir(CONFIG_PATH.joinpath('modules'))
 
 		# Check config file
-		with open(CONFIG_PATH.joinpath('config'), 'a') as file:
-			file.write('{\n\n}')
+		if not os.path.exists(CONFIG_PATH.joinpath('config')):
+			with open(CONFIG_PATH.joinpath('config'), 'a') as file:
+				file.write('{\n\n}')
 
 		# Check style file
 		with open(CONFIG_PATH.joinpath('style.css'), 'a') as file: pass
