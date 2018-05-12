@@ -2,24 +2,12 @@
 	/* Should add to QPushButton's
 	min-height + padding-top + padding-bottom */
 	min-height:34px;
-	
-	margin-top: 15px;
-	background:rgb(0,0,0,0%);
+
+	background:rgb(rgb-xrdb-color0, 80%);
 }
-#bar_right  { margin-right: 15px; }
-#bar_left   { margin-left: 15px; }
-
-/* debugging bar position */
- /*
-#bar_right  { background: #f00; }
-#bar_left   { background: #0f0; }
-#bar_center { background: #00f; }
-*/
-
-* { font: 11px envypn; }
 
 QPushButton, QMenu::item {
-	background: rgb(rgb-xrdb-color0, 75%);
+	/*background: rgb(rgb-xrdb-color0, 75%);*/
 	color: xrdb-color5;
 	min-width: 20px;
 	padding: 7px 10px 7px;
@@ -30,35 +18,22 @@ QPushButton, QMenu::item {
 }
 
 QMenu::item {
+	background: rgb(rgb-xrdb-color0, 80%);
 	min-height:10px;
 	padding:7px;
 }
 
-/* individual button margins */
-/*
-#bar_right QPushButton { margin-left: 15px; }
-#bar_left QPushButton { margin-right: 15px; }
-#bar_center QPushButton { margin: 0 7px; }
-#I3 QPushButton { margin:0; }
-*/
-
-QPushButton:hover, QMenu::item:selected {
-	background: rgb(rgb-xrdb-color3, 40%);
-	border-color:xrdb-color0;
-	color: xrdb-color1;
+QPushButton:hover, QMenu::item:selected, QPushButton[i3visible=true] {
+	background: rgb(rgb-xrdb-color7, 10%);
+	color: xrdb-color2;
 }
 
 QMenu::item:pressed {
-	padding-left:5px;
-	border-left: 2px solid xrdb-color1;
+	padding-left:4px;
+	border-left: 3px solid xrdb-color2;
 }
 
 QPushButton:pressed { 
-	padding-bottom: 5px;
-	border-bottom: 2px solid xrdb-color1;
+	padding-bottom: 4px;
+	border-bottom: 3px solid xrdb-color2;
  }
-
-QPushButton[i3visible=true] {
-	background: rgb(rgb-xrdb-color3, 40%);
-	color: xrdb-color1;
-}
