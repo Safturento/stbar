@@ -16,7 +16,7 @@ class Wifi(Module):
 
 	def run(self):
 		while True:
-			output = self.exec('nmcli -t -f active,ssid dev wifi')[0].split('\n')[0].split(':')
+			output = self.exec('nmcli -t -f active,ssid dev wifi | grep yes')[0].strip().split(':')
 			if output[0] == 'yes':
 				self.setText('{} {}'.format(self.config[self.name]['icon'], output[1]))
 				self.setProperty('connected', True)

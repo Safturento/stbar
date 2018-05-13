@@ -146,7 +146,7 @@ class Module(QPushButton, QThread):
 		parts = script.split('|') 
 		p = []
 		for i, part in enumerate(parts):
-			args = str(PosixPath(script).expanduser()).split()
+			args = str(PosixPath(part).expanduser()).split()
 			if i == 0:
 				p.append(Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE))
 			else:

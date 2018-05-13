@@ -28,7 +28,7 @@ class PostInstall(install):
 
 setup(
 	name = 'stbar',
-	version = '0.2.2',
+	version = '0.2.3',
 	description = 'Taskbar for linux tiling window managers',
 	# author = 'Jean-Michel Mailloux-Huberdeau',
 	url = 'https://github.com/Safturento/stbar',
