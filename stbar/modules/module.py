@@ -154,4 +154,4 @@ class Module(QPushButton, QThread):
 
 		output, error = p[-1].communicate()
 
-		return output.decode('utf-8'), False if error is '' else error
+		return output.decode('utf-8'), False if error == b'' else error

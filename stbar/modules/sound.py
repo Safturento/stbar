@@ -19,6 +19,7 @@ class Sound(Module):
 		self.proc.start(self.config[self.name]['exec'])
 
 	def run(self): pass
+		# print(self.get_sinks())
 
 	def get_sinks(self):
 		info = ['index', 'muted', 'alias', 'card_name', 'priority:', 'volume']
