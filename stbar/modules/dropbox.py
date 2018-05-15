@@ -20,8 +20,6 @@ class Dropbox(Module):
 
 	def run(self):
 		while True:
-			self.sleep(self.config[self.name]['interval'])
-
 			output, error = self.exec('{} status'.format(self.config[self.name]['script-path']))
 			if error:
 				self.setText('Dropbox not found!')
@@ -38,6 +36,8 @@ class Dropbox(Module):
 						self.setText(self.config[self.name]['normal-icon'])
 				else:
 					self.setText(status)
+
+			self.sleep(self.config[self.name]['interval'])
 
 
 def init(stbar, parent_bar): return Dropbox(stbar, parent_bar)

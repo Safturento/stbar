@@ -24,7 +24,7 @@ DEFAULT_CONFIG = {
 	'modules':{
 		'left': ['I3'],
 		'center': ['Clock'],
-		'right': ['Sound', 'Battery', 'Wifi', 'Dropbox', 'Lock']
+		'right': ['Sound', 'Battery', 'Wifi', 'Dropbox', 'Cpu', 'Memory', 'Lock']
 	}
 }
 
@@ -172,3 +172,4 @@ class stbar(QWidget):
 					
 					except ModuleNotFoundError:
 						print(color('Module doesn\'t exist.', 'FAIL'))
+		print('stbar loaded.')
