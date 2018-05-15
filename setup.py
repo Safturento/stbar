@@ -24,7 +24,9 @@ class PostInstall(install):
 				file.write('{\n\n}')
 
 		# Check style file
-		with open(CONFIG_PATH.joinpath('style.css'), 'a') as file: pass
+		with open(CONFIG_PATH.joinpath('style.css'), 'a') as file: pass	
+
+		install.run(self)
 
 setup(
 	name = 'stbar',
