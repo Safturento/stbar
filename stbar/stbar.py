@@ -24,7 +24,7 @@ DEFAULT_CONFIG = {
 	'modules':{
 		'left': ['I3'],
 		'center': ['Clock'],
-		'right': ['Sound', 'Battery', 'Wifi', 'Dropbox', 'Cpu', 'Memory', 'Lock']
+		'right': ['Sound', 'Battery', 'Wifi', 'Dropbox', 'Lock']
 	}
 }
 

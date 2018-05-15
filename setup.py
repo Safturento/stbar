@@ -37,7 +37,7 @@ setup(
 	packages = find_packages(),
 	package_data = {'stbar': ['style.css']},
 	include_package_data = True,
-	install_requires = ['i3ipc', 'PySide2'],
+	install_requires = ['i3ipc', 'PySide2', 'pulsectl'],
 	entry_points = {'console_scripts': ['stbar=stbar.__main__:main']},
 	cmdclass = { 'install': PostInstall }
 )
