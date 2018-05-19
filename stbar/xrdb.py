@@ -7,7 +7,7 @@ def get_xrdb_colors():
 	'''
 	xrdb = Popen(('xrdb', '-query'), stdout=PIPE)
 	xrdb_clean = xrdb.communicate()[0].decode().replace('\t', '')
-	return dict(re.findall(r'\*.(color\d):(#\w+)', xrdb_clean))
+	return dict(re.findall(r'\*.(color\d+):(#\w+)', xrdb_clean))
 
 def hex_to_rgb(hex_string):
 	hex_string = re.sub('#', '', hex_string)
