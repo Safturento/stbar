@@ -18,6 +18,7 @@ class Module(QPushButton, QThread):
 		self.setObjectName(name)
 		self.config = stbar.deep_update(default_config, stbar.config)
 		self.show()
+		
 		if hasattr(self, 'on_click'):
 			self.clicked.connect(self.on_click)
 

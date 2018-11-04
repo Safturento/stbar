@@ -23,8 +23,8 @@ FILE_PATH = os.path.dirname(__file__)
 DEFAULT_CONFIG = {
 	'modules':{
 		'left': ['I3'],
-		'center': ['Clock'],
-		'right': ['Sound', 'Battery', 'Wifi', 'Dropbox', 'Lock']
+		'center': [],
+		'right': ['Sound', 'Battery', 'Wifi', 'Dropbox', 'Clock']
 	}
 }
 
@@ -36,8 +36,7 @@ TEXT_COLOR = {
     'FAIL':		 '\033[91m',
     'ENDC':		 '\033[0m',
     'BOLD':		 '\033[1m',
-    'UNDERLINE': '\033[4m',
-	
+    'UNDERLINE': '\033[4m',	
 }
 
 def color(text, flag):

@@ -3,7 +3,7 @@ from PySide2.QtWidgets import QMessageBox
 
 DEFAULT_CONFIG = {
 	'Lock': {
-		'exec': '~/.config/i3/scripts/i3lock.sh',
+		'exec': 'i3lock',
 	}
 }
 
